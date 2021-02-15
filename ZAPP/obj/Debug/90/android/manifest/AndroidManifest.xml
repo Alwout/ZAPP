@@ -5,7 +5,9 @@
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme" android:name="android.app.Application" android:debuggable="true" android:extractNativeLibs="true">
+    <activity android:label="Detail" android:name="crc646c02556064c59ab6.Detail" />
     <activity android:label="Login" android:theme="@style/AppTheme.NoActionBar" android:name="crc646c02556064c59ab6.Login" />
+    <activity android:label="Overview" android:name="crc646c02556064c59ab6.Overview" />
     <activity android:label="@string/app_name" android:theme="@style/Theme.Splash" android:name="crc646c02556064c59ab6.Splash">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

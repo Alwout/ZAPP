@@ -61,10 +61,14 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Detail.cs" />
     <Compile Include="Login.cs" />
+    <Compile Include="Overview.cs" />
+    <Compile Include="OverviewListViewAdapter.cs" />
     <Compile Include="Splash.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisitRecord.cs" />
     <Compile Include="_database.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +133,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Login.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Overview.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\VisitRow.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Detail.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>

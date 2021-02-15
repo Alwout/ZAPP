@@ -19,6 +19,7 @@ using Mono.Data.Sqlite;
 
 namespace ZAPP
 {
+    
     class _database
     {
         //Context definieren
@@ -30,16 +31,22 @@ namespace ZAPP
         private string clientsUrl = "http://192.168.1.111/cockpit-master/api/collections/get/clients?token=eb84b98553c992cd134e1f63c43051";
         private string[] collections = { "tasks", "users", "visits", "clients" };
 
+        public enum collection { tasks = 0, users = 1, visits = 2, clients = 3 };
+
         //Constructor
         public _database(Context context)
         {
             this.context = context;
-            this.createDatabase();
-            foreach(string collection in collections)
+            string pathToDatabase = getDatabasePath();
+            if (!File.Exists(pathToDatabase))
             {
-                this.downloadData(String.Format(baseUrl, collection));
+                this.createDatabase();
+                foreach (string collection in collections)
+                {
+                    this.downloadData(String.Format(baseUrl, collection));
+                }
+                this.getAllData();
             }
-            this.getAllData();
         }
 
         //Database maken
@@ -47,43 +54,104 @@ namespace ZAPP
         {
             string pathToDatabase = getDatabasePath();
 
-            if (!File.Exists(pathToDatabase))
+            SqliteConnection.CreateFile(pathToDatabase);
+
+            string connectionString = String.Format("Data Source = {0};", pathToDatabase);
+            using (var conn = new SqliteConnection(connectionString))
             {
-                SqliteConnection.CreateFile(pathToDatabase);
-
-                string connectionString = String.Format("Data Source = {0};", pathToDatabase);
-                using (var conn = new SqliteConnection(connectionString))
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (var cmd = conn.CreateCommand())
-                    {
-                        // Table data
-                        cmd.CommandText = "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, _id text, username text, password text)";
-                        cmd.CommandType = CommandType.Text;
-                        cmd.ExecuteNonQuery();
+                    // Table 
+                    cmd.CommandText = "CREATE TABLE loggedinuser(id INTEGER PRIMARY KEY AUTOINCREMENT, username text)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
 
-                        cmd.CommandText = "CREATE TABLE tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, _id text, bezoek_id text, titel text, omschrijving text, voltooid integer)";
-                        cmd.CommandType = CommandType.Text;
-                        cmd.ExecuteNonQuery();
+                    cmd.CommandText = "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, _id text, username text, password text)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
 
-                        cmd.CommandText = "CREATE TABLE visits(id INTEGER PRIMARY KEY AUTOINCREMENT, _id text, client_id text, datum text, tijd text, aanwezig integer)";
-                        cmd.CommandType = CommandType.Text;
-                        cmd.ExecuteNonQuery();
+                    cmd.CommandText = "CREATE TABLE tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, _id text, bezoek_id text, titel text, omschrijving text, voltooid integer)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
 
-                        cmd.CommandText = "CREATE TABLE clients(id INTEGER PRIMARY KEY AUTOINCREMENT, _id text, naam text, adres text, postcode text, woonplaats text, telefoonnummer text)";
-                        cmd.CommandType = CommandType.Text;
-                        cmd.ExecuteNonQuery();
+                    cmd.CommandText = "CREATE TABLE visits(id INTEGER PRIMARY KEY AUTOINCREMENT, _id text, client_id text, datum text, tijd text, aanwezig integer)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
 
-                    }
-                    conn.Close();
+                    cmd.CommandText = "CREATE TABLE clients(id INTEGER PRIMARY KEY AUTOINCREMENT, _id text, naam text, adres text, postcode text, woonplaats text, telefoonnummer text)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+
                 }
+                conn.Close();
             }
+  
         }
 
-        public ArrayList getAllData()
+        public ArrayList[] getAllData()
+        {
+            //Create a new ArrayList
+            ArrayList[] dataList = new ArrayList[collections.Length];
+
+            int i = 0;
+            foreach (string collection in collections)
+            {
+                dataList[i] = getCollectionData(collection);
+                i++;
+            }
+
+            return dataList;
+        }
+
+        private ArrayList getCollectionData(string collectionName)
         {
             //Create a new ArrayList
             ArrayList dataList = new ArrayList();
+
+            string pathToDatabase = getDatabasePath();
+
+            string connectionString = String.Format("Data Source = {0};", pathToDatabase);
+            using (var conn = new SqliteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    // Table data
+                    cmd.CommandText = String.Format("SELECT * FROM {0}", collectionName);
+                    cmd.CommandType = CommandType.Text;
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        object record = null;
+                        //Console.WriteLine(reader["client_id"] + " " + reader["datum"] + " " + reader["aanwezig"]);
+                        if (collectionName == "visits") {
+                            record = new visitRecord(reader);
+                        } else if (collectionName == "clients")
+                        {
+                            record = new clientRecord(reader);
+                        } else if (collectionName == "users")
+                        {
+                            record = new userRecord(reader);
+                        } else if (collectionName == "tasks")
+                        {
+                            record = new taskRecord(reader);
+                        }
+                        if (record != null)
+                        {
+                            dataList.Add(record);
+                        }
+                        //Console.WriteLine(reader["description"]);
+                    }
+                }
+                conn.Close();
+            }
+
+            foreach (object bar in dataList)
+            {
+                Console.WriteLine(bar);
+            }
 
             return dataList;
         }
@@ -145,6 +213,85 @@ namespace ZAPP
             return pathToDatabase;
         }
 
+        private void postUserLogin(string username)
+        {
+            string databasePath = getDatabasePath();
+            string connectionString = String.Format("Data Source = {0};", databasePath);
+            using (var conn = new SqliteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    // Table data
+                    cmd.CommandText = String.Format("INSERT INTO loggedinuser (username) values('{0}')", username);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        public bool verifyUser(string username, string password)
+        {
+            string databasePath = getDatabasePath();
+            string connectionString = String.Format("Data Source = {0};", databasePath);
+            using (var conn = new SqliteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    // Table data
+                    cmd.CommandText = String.Format("SELECT DISTINCT username FROM users WHERE username = '{0}' AND password = '{1}'", username, password);
+                    cmd.CommandType = CommandType.Text;
+                    SqliteDataReader reader = cmd.ExecuteReader();
+                    Console.WriteLine("rows found:" + reader.HasRows);
+                    if (reader.HasRows == false)
+                    {
+                        return false;
+                    }
+                    
+                }
+                conn.Close();
+            }
+
+            postUserLogin(username);
+            return true;
+        }
+
+        public bool isUserLoggedIn()
+        {
+            object username = null;
+            string databasePath = getDatabasePath();
+            string connectionString = String.Format("Data Source = {0};", databasePath);
+            using (var conn = new SqliteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    // Table data
+                    cmd.CommandText = String.Format("SELECT username FROM loggedinuser");
+                    cmd.CommandType = CommandType.Text;
+                    SqliteDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows == false)
+                    {
+                        Console.WriteLine("no user found");
+                    } else
+                    {
+                        username = reader.GetValue(0);
+                        Console.WriteLine("user found: " + username);
+                    }
+
+                }
+                conn.Close();
+            }
+
+            if (username == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void insertDataRecord(string insertString)
         {
             string databasePath = getDatabasePath();
@@ -184,10 +331,10 @@ namespace ZAPP
 
         public class visitRecord : dataRecord
         {
-            private string client_id;
-            private string datum;
-            private string tijd;
-            private int aanwezig = 0;
+            public string client_id;
+            public string datum;
+            public string tijd;
+            public int aanwezig = 0;
 
             public visitRecord(JsonValue record) : base(record)
             {
@@ -202,7 +349,7 @@ namespace ZAPP
                 client_id = (string)record["client_id"];
                 datum = (string)record["datum"];
                 tijd = (string)record["tijd"];
-                aanwezig = (int)record["aanwezig"];
+                aanwezig = Convert.ToInt32(record["aanwezig"]);
             }
 
             public void insertDataRecord(_database database)
@@ -237,11 +384,11 @@ namespace ZAPP
 
         public class clientRecord : dataRecord
         {
-            private string naam;
-            private string adres;
-            private string postcode;
-            private string woonplaats;
-            private string telefoonnummer;
+            public string naam;
+            public string adres;
+            public string postcode;
+            public string woonplaats;
+            public string telefoonnummer;
 
 
             public clientRecord(JsonValue record) : base(record)
@@ -288,7 +435,7 @@ namespace ZAPP
                 bezoek_id = (string)record["bezoek_id"];
                 titel = (string)record["titel"];
                 omschrijving = (string)record["omschrijving"];
-                voltooid = (int)record["voltooid"];
+                voltooid = Convert.ToInt32(record["voltooid"]);
             }
             public void insertDataRecord(_database database)
             {

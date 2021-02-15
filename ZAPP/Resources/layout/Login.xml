@@ -40,10 +40,8 @@
             android:text="@string/LoginText"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:id="@+id/button1" />
+            android:id="@+id/submitButton" />
 
     </LinearLayout>
-
-    
 
 </android.support.design.widget.CoordinatorLayout>

@@ -21,7 +21,14 @@ namespace ZAPP
 
             Thread.Sleep(5000);
 
-            StartActivity(typeof(Login));
+            if (db.isUserLoggedIn())
+            {
+                StartActivity(typeof(Overview));
+            } else
+            {
+                StartActivity(typeof(Login));
+            }
         }
-	}
+
+    }
 }

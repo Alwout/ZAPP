@@ -255,17 +255,9 @@ C:\Educom\ZAPP\ZAPP\ZAPP\obj\Debug\90\stamp\_ConvertResourcesCases.stamp
 C:\Educom\ZAPP\ZAPP\ZAPP\obj\Debug\90\stamp\_GenerateJavaStubs.stamp
 C:\Educom\ZAPP\ZAPP\ZAPP\obj\Debug\90\stamp\_GeneratePackageManagerJava.stamp
 C:\Educom\ZAPP\ZAPP\ZAPP\obj\Debug\90\stamp\_ResolveLibraryProjectImports.stamp
-C:\Educom\ZAPP\ZAPP\bin\Debug\ZAPP.dll
-C:\Educom\ZAPP\ZAPP\bin\Debug\ZAPP.pdb
-C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp.apk
-C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp.aab
-C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp-Signed.aab
-C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp-Signed.apk
-C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp-Signed.apk.idsig
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\MonoAndroid,Version=v9.0.AssemblyAttributes.cs
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\build.props
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\adb.props
-C:\Educom\ZAPP\ZAPP\obj\Debug\90\ZAPP.csprojAssemblyReference.cache
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\_VerifyXamarinAndroidSupportVersions.stamp
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\stamp\_BuildLibraryImportsCache.stamp
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\res.flag
@@ -278,6 +270,14 @@ C:\Educom\ZAPP\ZAPP\obj\Debug\90\lp\31\jl\files.cache
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\lp\32\jl\files.cache
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\lp\33\jl\files.cache
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\lp\37\jl\files.cache
+C:\Educom\ZAPP\ZAPP\bin\Debug\ZAPP.dll
+C:\Educom\ZAPP\ZAPP\bin\Debug\ZAPP.pdb
+C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp.apk
+C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp.aab
+C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp-Signed.aab
+C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp-Signed.apk
+C:\Educom\ZAPP\ZAPP\bin\Debug\com.companyname.zapp-Signed.apk.idsig
+C:\Educom\ZAPP\ZAPP\obj\Debug\90\ZAPP.csprojAssemblyReference.cache
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\R.txt
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\R.cs.flag
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\ZAPP.csproj.CoreCompileInputs.cache
@@ -317,6 +317,8 @@ C:\Educom\ZAPP\ZAPP\obj\Debug\90\res\drawable\splash_background.xml
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\res\drawable\splash.png
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\res\layout\header.xml
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\res\layout\login.xml
+C:\Educom\ZAPP\ZAPP\obj\Debug\90\res\layout\overview.xml
+C:\Educom\ZAPP\ZAPP\obj\Debug\90\res\layout\visitrow.xml
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\uploadflags.txt
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\resolvedassemblies.hash
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\assets\Java.Interop.dll
@@ -429,6 +431,8 @@ C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\android\support\v7\cardview\R.java
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\android\support\v7\recyclerview\R.java
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\android\support\v7\widget\Toolbar_NavigationOnClickEventDispatcher.java
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\crc646c02556064c59ab6\Login.java
+C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\crc646c02556064c59ab6\Overview.java
+C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\crc646c02556064c59ab6\OverviewListViewAdapter.java
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\crc646c02556064c59ab6\Splash.java
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\crc64a0e0a82d0db9a07d\AccelerometerListener.java
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\crc64a0e0a82d0db9a07d\ActivityLifecycleContextListener.java
@@ -530,3 +534,5 @@ C:\Educom\ZAPP\ZAPP\obj\Debug\90\stamp\_CopyConfigFiles.stamp
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\stamp\_GenerateJavaStubs.stamp
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\stamp\_GeneratePackageManagerJava.stamp
 C:\Educom\ZAPP\ZAPP\obj\Debug\90\stamp\_ResolveLibraryProjectImports.stamp
+C:\Educom\ZAPP\ZAPP\obj\Debug\90\res\layout\detail.xml
+C:\Educom\ZAPP\ZAPP\obj\Debug\90\android\src\crc646c02556064c59ab6\Detail.java
