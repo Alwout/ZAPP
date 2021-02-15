@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:id="@+id/relativeLayout1">
+
+        <ImageView
+        android:src="@drawable/splash_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dip"
+        android:id="@+id/imageView1" />
+
+        <ListView
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listView1" />
+    </LinearLayout>
+    
+
+</android.support.design.widget.CoordinatorLayout>
