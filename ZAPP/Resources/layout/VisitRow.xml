@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="#30FFFFFF"
     android:padding="8dp">
 
     <LinearLayout
@@ -14,6 +15,7 @@
         android:paddingRight="2dip"
         android:minWidth="25px"
         android:minHeight="55px"
+        
         android:layout_marginBottom="0dp">
         <TextView
             android:id="@+id/NaamText"

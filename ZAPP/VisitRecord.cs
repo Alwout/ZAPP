@@ -13,17 +13,19 @@ namespace ZAPP
 {
     public class VisitRecord
     {
-        private string client_id;
+        public string bezoek_id;
+        public string client_id;
         public string naam;
         public string adres;
         public string postcode;
         public string woonplaats;
         public string datum;
         public string tijd;
-        private int aanwezig = 0;
+        public int aanwezig = 0;
 
-        public VisitRecord(string client_id, string naam, string adres, string postcode, string woonplaats, string datum, string tijd, int aanwezig)
+        public VisitRecord(string bezoek_id, string client_id,string naam, string adres, string postcode, string woonplaats, string datum, string tijd, int aanwezig)
         {
+            this.bezoek_id = bezoek_id;
             this.client_id = client_id;
             this.naam = naam;
             this.adres = adres;

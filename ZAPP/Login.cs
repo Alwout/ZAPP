@@ -21,14 +21,12 @@ namespace ZAPP
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.Login);
 
-            
-
             Button submitButton = FindViewById<Button>(Resource.Id.submitButton);
 
             submitButton.Click += OnButtonClicked;
         }
 
-        async void OnButtonClicked(object sender, EventArgs args)
+       void OnButtonClicked(object sender, EventArgs args)
         {
 
             //await db.postUserData();
@@ -40,7 +38,10 @@ namespace ZAPP
 
             Console.WriteLine(usernameInput.Text + passwordInput.Text);
 
-            db.verifyUser(usernameInput.Text, passwordInput.Text);
+            if (db.verifyUser(usernameInput.Text, passwordInput.Text))
+            {
+                StartActivity(typeof(Overview));
+            }
 
         }
     }

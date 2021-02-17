@@ -19,7 +19,7 @@ using Mono.Data.Sqlite;
 
 namespace ZAPP
 {
-    
+
     class _database
     {
         //Context definieren
@@ -41,11 +41,15 @@ namespace ZAPP
             if (!File.Exists(pathToDatabase))
             {
                 this.createDatabase();
-                foreach (string collection in collections)
-                {
-                    this.downloadData(String.Format(baseUrl, collection));
-                }
-                this.getAllData();
+                this.downloadAllData();
+            }
+        }
+
+        public void downloadAllData()
+        {
+            foreach (string collection in collections)
+            {
+                this.downloadData(String.Format(baseUrl, collection));
             }
         }
 
@@ -86,7 +90,7 @@ namespace ZAPP
                 }
                 conn.Close();
             }
-  
+
         }
 
         public ArrayList[] getAllData()
@@ -249,7 +253,7 @@ namespace ZAPP
                     {
                         return false;
                     }
-                    
+
                 }
                 conn.Close();
             }
@@ -305,10 +309,47 @@ namespace ZAPP
                     cmd.CommandText = insertString;
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery();
-                    Console.WriteLine("INSERT QUERY EXECUTED");
+                    Console.WriteLine("INSERT QUERY EXECUTED: " + insertString);
                 }
                 conn.Close();
             }
+        }
+
+        public void updateDataRecord(string updateString)
+        {
+            string databasePath = getDatabasePath();
+            string connectionString = String.Format("Data Source = {0};", databasePath);
+            using (var conn = new SqliteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    // Table data
+                    cmd.CommandText = updateString;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("UPDATE QUERY EXECUTED: " + updateString);
+                }
+                conn.Close();
+            }
+        }
+
+        public void postAanmelding(string bezoek_id, int aanwezig)
+        {
+            //TODO
+            //Post a message to the cockpit collection
+            //Update the local sqlite database
+            string updateString = String.Format("UPDATE visits SET aanwezig = {0} WHERE _id = '{1}'", aanwezig, bezoek_id);
+            updateDataRecord(updateString);
+        }
+
+        public void postVoltooid(string task_id, int voltooid)
+        {
+            //TODO
+            //Post a message to the cockpit collection
+            //Update the local sqlite database
+            string updateString = String.Format("UPDATE tasks SET voltooid = {0} WHERE _id = '{1}'", voltooid, task_id);
+            updateDataRecord(updateString);
         }
 
         public class dataRecord

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="#30FFFFFF"
+    android:visibility="invisible"
+    android:id="@+id/adresLayout">
+    <TextView
+        android:text="Large Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50px"
+        android:textColor="#000000"
+        android:textSize="24dip"
+        android:textStyle="bold"
+        android:paddingLeft="50dip"
+        android:paddingTop="50dip"
+        android:gravity="left"
+        android:id="@+id/adresText" />
+
+    <TextView
+        android:text="Large Text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="50px"
+        android:textColor="#000000"
+        android:textSize="24dip"
+        android:paddingLeft="50dip"
+        android:gravity="left"
+        android:id="@+id/telefoonText" />
+
+    <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="50px"
+        android:textColor="#000000"
+        android:textSize="24dip"
+        android:gravity="center_horizontal"
+        android:id="@+id/planningText" />
+
+</LinearLayout>

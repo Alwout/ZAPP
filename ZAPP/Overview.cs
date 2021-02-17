@@ -16,7 +16,7 @@ namespace ZAPP
     public class Overview : Activity
     {
         ListView listView;
-        List<VisitRecord> records;
+        public static List<VisitRecord> records;
         ArrayList[] result;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,18 +29,15 @@ namespace ZAPP
 
             int visitIndex = (int)_database.collection.visits;
             int clientIndex = (int)_database.collection.clients;
-            Console.WriteLine(result);
-
-
 
             foreach (_database.visitRecord visitrecord in result[visitIndex])
             {
 
-                foreach(_database.clientRecord clientrecord in result[clientIndex])
+                foreach (_database.clientRecord clientrecord in result[clientIndex])
                 {
                     if (clientrecord._id == visitrecord.client_id)
                     {
-                        VisitRecord row = new VisitRecord(visitrecord.client_id, clientrecord.naam, clientrecord.adres, clientrecord.postcode, clientrecord.woonplaats, visitrecord.datum, visitrecord.tijd, visitrecord.aanwezig);
+                        VisitRecord row = new VisitRecord(visitrecord._id, visitrecord.client_id, clientrecord.naam, clientrecord.adres, clientrecord.postcode, clientrecord.woonplaats, visitrecord.datum, visitrecord.tijd, visitrecord.aanwezig);
 
                         records.Add(row);
                         break;
@@ -63,8 +60,9 @@ namespace ZAPP
             var t = records[e.Position];
 
             var intent = new Intent(this, typeof(Detail));
-            //intent.PutExtra("ID", t);
-            //intent.PutExtra("code", t.code);
+            intent.PutExtra("bezoek_id", t.bezoek_id);
+            intent.PutExtra("client_id", t.client_id);
+            intent.PutExtra("aanwezig", t.aanwezig);
             //intent.PutExtra("description", t.description);
             StartActivityForResult(intent, 0);
         }
