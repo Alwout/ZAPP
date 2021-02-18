@@ -45,6 +45,7 @@ namespace ZAPP
             }
         }
 
+        //Download alle data van elke collection
         public void downloadAllData()
         {
             foreach (string collection in collections)
@@ -122,7 +123,13 @@ namespace ZAPP
                 using (var cmd = conn.CreateCommand())
                 {
                     // Table data
-                    cmd.CommandText = String.Format("SELECT * FROM {0}", collectionName);
+                    if (collectionName == "visits")
+                    {
+                        cmd.CommandText = String.Format("SELECT * FROM {0} ORDER BY datum, tijd", collectionName);
+                    } else
+                    {
+                        cmd.CommandText = String.Format("SELECT * FROM {0}", collectionName);
+                    }
                     cmd.CommandType = CommandType.Text;
                     var reader = cmd.ExecuteReader();
 
@@ -336,8 +343,27 @@ namespace ZAPP
 
         public void postAanmelding(string bezoek_id, int aanwezig)
         {
-            //TODO
             //Post a message to the cockpit collection
+            string postVisitUrl = "http://192.168.1.111/cockpit-master/api/collections/save/visits?token=eb84b98553c992cd134e1f63c43051";
+            bool aanwezigBool = aanwezig == 1;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(postVisitUrl);
+            httpWebRequest.ContentType = "application/json; charset=UTF-8";
+            httpWebRequest.Method = "POST";
+            string postDataString = String.Format("{{\"data\":{{\"_id\":\"{0}\",\"aanwezig\":\"{1}\"}}}}", bezoek_id, aanwezigBool);
+            Console.WriteLine(postDataString);
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(postDataString);
+                streamWriter.Close();
+            }
+            // grab te response and print it out to the console along with the status code
+            HttpWebResponse response = (HttpWebResponse)httpWebRequest.GetResponse();
+            string result;
+            using (StreamReader rdr = new StreamReader(response.GetResponseStream()))
+            {
+                result = rdr.ReadToEnd();
+            }
+            Console.WriteLine(result);
             //Update the local sqlite database
             string updateString = String.Format("UPDATE visits SET aanwezig = {0} WHERE _id = '{1}'", aanwezig, bezoek_id);
             updateDataRecord(updateString);
@@ -345,8 +371,26 @@ namespace ZAPP
 
         public void postVoltooid(string task_id, int voltooid)
         {
-            //TODO
             //Post a message to the cockpit collection
+            string postTaskUrl = "http://192.168.1.111/cockpit-master/api/collections/save/tasks?token=eb84b98553c992cd134e1f63c43051";
+            bool voltooidBool = voltooid == 1;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(postTaskUrl);
+            httpWebRequest.ContentType = "application/json; charset=UTF-8";
+            httpWebRequest.Method = "POST";
+            string postDataString = String.Format("{{\"data\":{{\"_id\":\"{0}\",\"voltooid\":\"{1}\"}}}}", task_id, voltooidBool);
+            Console.WriteLine(postDataString);
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(postDataString);
+                streamWriter.Close();
+            }
+            // grab te response and print it out to the console along with the status code
+            HttpWebResponse response = (HttpWebResponse)httpWebRequest.GetResponse();
+            string result;
+            using (StreamReader rdr = new StreamReader(response.GetResponseStream()))
+            {
+                result = rdr.ReadToEnd();
+            }
             //Update the local sqlite database
             string updateString = String.Format("UPDATE tasks SET voltooid = {0} WHERE _id = '{1}'", voltooid, task_id);
             updateDataRecord(updateString);

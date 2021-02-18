@@ -17,11 +17,13 @@ namespace ZAPP
 
         List<TaskRecord> items;
         Activity context;
+        _database db;
 
         public TaskListViewAdapter(Activity context, List<TaskRecord> items) : base()
         {
             this.context = context;
             this.items = items;
+            this.db = new _database(context);
         }
 
         public override TaskRecord this[int position]
@@ -60,7 +62,6 @@ namespace ZAPP
             }
             voltooidMark.Click += (object sender, EventArgs args) =>
             {
-                _database db = new _database(context);
 
                 string task_id = item.id;
                 if (voltooidMark.Checked)
